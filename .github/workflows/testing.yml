@@ -2,8 +2,8 @@ name: Test PowerShell on Ubuntu
 on: push
 
 jobs:
-  install-dependencies:
-    name: Install dependencies
+  pester-tests:
+    name: Perform pester tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -19,7 +19,7 @@ jobs:
         run: |
           Set-PSRepository PSGallery -InstallationPolicy Trusted
           Install-Module Az.Resources -ErrorAction Stop
-      - name: Perform Pester tests
+      - name: run tests
         shell: pwsh
         run: |
           Invoke-Pester ../*.tests.ps1 -Passthru
