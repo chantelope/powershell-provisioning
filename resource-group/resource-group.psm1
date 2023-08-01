@@ -6,3 +6,11 @@ function New-ResourceGroup {
 
     New-AzResourceGroup -Name $Name -Location $Location
 }
+
+function Get-ResourceGroup {
+    param(
+        [parameter(Mandatory=$true)][ValidateNotNull()][string]$Name
+    )
+
+    Get-AzResourceGroup -Name $Name
+}
