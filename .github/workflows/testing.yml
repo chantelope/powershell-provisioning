@@ -12,6 +12,7 @@ jobs:
         run: |
           Set-PSRepository PSGallery -InstallationPolicy Trusted
           Install-Module Az.Resources
+          Import-Module Az.Resources
   pester-test:
     name: Pester test
     runs-on: ubuntu-latest
