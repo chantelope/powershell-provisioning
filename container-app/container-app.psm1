@@ -29,3 +29,17 @@ function New-ContainerAppManagedEnvironment{
 
     New-AzContainerAppManagedEnv @Configuration
 }
+
+function Get-ContainerAppManagedEnvironment{
+    param(
+        [parameter(Mandatory=$true)][ValidateNotNull()][string]$EnvironmentName,
+        [parameter(Mandatory=$true)][ValidateNotNull()][string]$ResourceGroupName
+    )
+
+    $Configuration = @{
+        EnvName = $EnvironmentName
+        ResourceGroupName = $ResourceGroupName
+    }
+
+    Get-AzContainerAppManagedEnv @Configuration
+}
