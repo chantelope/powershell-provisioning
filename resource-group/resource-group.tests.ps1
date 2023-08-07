@@ -1,4 +1,4 @@
-Describe "Should" {
+Describe "should" {
 
     It "create resource group" {
 
@@ -20,7 +20,7 @@ Describe "Should" {
     }
 }
 
-Describe "Should" {
+Describe "should" {
 
     It "get resource group" {
 

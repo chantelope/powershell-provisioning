@@ -19,6 +19,7 @@ jobs:
         run: |
           Set-PSRepository PSGallery -InstallationPolicy Trusted
           Install-Module Az.Resources -ErrorAction Stop
+          Install-Module Az.App -ErrorAction Stop
       - name: run tests
         shell: pwsh
         run: |
