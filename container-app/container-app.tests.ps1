@@ -71,3 +71,40 @@ Describe "should" {
         Should -InvokeVerifiable
     }
 }
+
+Describe "should" {
+
+    It "assign managed environment to container app" {
+
+        Import-Module $PSScriptRoot/../container-app
+        Import-Module $PSScriptRoot/../resource-group
+
+        $AppName = "app-name"
+        $EnvironmentName = "env-name"
+        $ResourceGroupName = "test-rg"
+        $Location = "uksouth"
+
+        [object]$ManagedEnvironment = @{
+            Id = New-Guid
+        }
+
+        [object]$ResourceGroup = @{
+            Name = $ResourceGroupName
+            Location = $Location
+        }
+
+        Mock Get-ResourceGroup { return $ResourceGroup } -ModuleName container-app -Verifiable
+        Mock Get-ContainerAppManagedEnvironment { return $ManagedEnvironment } -ModuleName container-app -Verifiable
+        Mock Update-AzContainerApp { } -ModuleName container-app -Verifiable
+
+        $Configuration = @{
+            AppName = $AppName
+            ResourceGroupName = $ResourceGroupName
+            EnvironmentName  = $EnvironmentName
+        }
+
+        Update-ContainerApp @Configuration
+
+        Should -InvokeVerifiable
+    }
+}

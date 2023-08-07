@@ -43,3 +43,26 @@ function Get-ContainerAppManagedEnvironment{
 
     Get-AzContainerAppManagedEnv @Configuration
 }
+
+function Update-ContainerApp{
+    param(
+        [parameter(Mandatory=$true)][ValidateNotNull()][string]$AppName,
+        [parameter(Mandatory=$true)][ValidateNotNull()][string]$ResourceGroupName,
+        [parameter(Mandatory=$true)][ValidateNotNull()][string]$EnvironmentName
+
+    )
+
+    Import-Module $PSScriptRoot/../resource-group
+
+    $Location = (Get-ResourceGroup -Name $ResourceGroupName).Location
+    $ManagedEnvironmentId = (Get-ContainerAppManagedEnvironment -EnvironmentName $EnvironmentName -ResourceGroupName $ResourceGroupName).Id 
+
+    $Configuration = @{
+        Name = $AppName
+        ResourceGroupName = $ResourceGroupName
+        ManagedEnvironmentId  = $ManagedEnvironmentId 
+        Location = $Location
+    }
+
+    Update-AzContainerApp @Configuration
+}
