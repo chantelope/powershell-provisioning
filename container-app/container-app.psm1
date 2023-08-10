@@ -11,7 +11,7 @@ function New-ContainerApp{
         Location = $Location
     }
 
-    New-AzContainerApp @Configuration
+    New-AzContainerApp @Configuration -IdentityType 'SystemAssigned'
 }
 
 function New-ContainerAppManagedEnvironment{
@@ -65,4 +65,22 @@ function Update-ContainerApp{
     }
 
     Update-AzContainerApp @Configuration
+}
+
+function Get-ContainerImage {
+    param(
+        [parameter(Mandatory=$true)][ValidateNotNull()][string]$AppName,
+        [parameter(Mandatory=$true)][ValidateNotNull()][string]$ImageName, 
+        [parameter(Mandatory=$true)][ValidateNotNull()][decimal]$ResourceCpu,
+        [parameter(Mandatory=$true)][ValidateNotNull()][string]$ResourceMemory
+    )
+
+    $Configuration = @{
+        Name = $AppName
+        Image = $ImageName
+        ResourceCpu = $ResourceCpu
+        ResourceMemory = $ResourceMemory
+    }
+
+    New-AzContainerAppTemplateObject @Configuration
 }
